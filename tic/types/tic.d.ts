@@ -55,12 +55,12 @@ declare function spr(
   h?: number
 ): void;
 declare function map(
-  x: number,
-  y: number,
-  w: number,
-  h: number,
-  sx: number,
-  sy: number,
+  x?: number,
+  y?: number,
+  w?: number,
+  h?: number,
+  sx?: number,
+  sy?: number,
   colorkey?: number,
   scale?: number,
   remap?: (tile: number) => number

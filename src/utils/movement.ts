@@ -5,8 +5,18 @@
  * @param t tempo ou fator de interpolação ex: velocidade
  * @returns 
  */
-export function LERP(a: number,b: number,t: number): number{
-    return a + (b-a) * t
+export function LERP(a: number, b: number, t: number): number {
+  return a + (b - a) * t
+}
+
+/**
+ * 
+ * @param tilex 
+ * @param tiley 
+ * @returns desired Tile in pixel
+ */
+export function goToTile(tilex: number, tiley: number) {
+  return { x: tilex * 8, y: tiley * 8 }
 }
 
 /*

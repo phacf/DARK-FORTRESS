@@ -17,7 +17,7 @@ export class InputController implements IInputController {
     }
 
     isRight(): boolean {
-        return btn(Keypad.down);
+        return btn(Keypad.right);
 
     }
 
