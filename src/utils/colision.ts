@@ -1,3 +1,4 @@
+import { detectTile } from "./screen"
 
 /**
  * 
@@ -38,7 +39,7 @@ export function checkCollision(
  * @param set 
  * @returns boolean
  */
-export function isColiding (x: number, y: number, w: number, h: number, set: number[]): boolean {
+export function isColidingTile (x: number, y: number, w: number, h: number, set: readonly number[]): boolean {
   return (
     detectTile(x, y, set) || // canto superior esquerdo
     detectTile(x + w - 1, y, set) || // superior direito

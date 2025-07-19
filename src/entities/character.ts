@@ -1,7 +1,10 @@
+import { MapConfig } from "@constants/map/map";
 import { Direction, DirectionType } from "@constants/sprites/entities";
 import { InputController } from "controllers/inputController";
 import { ICharacter } from "interfaces/ICharacter";
+import { isColidingTile } from "utils/colision";
 import { goToTile } from "utils/movement";
+
 
 export class Character implements ICharacter {
     private inputController: InputController;
@@ -25,10 +28,12 @@ export class Character implements ICharacter {
     private spriteIdx = 0;
 
     private sprites: number[] = [
-        256,257, // down 0 1
+        256, 257, // down 0 1
         258, 259, 260, // left/right 2 3 4
-        261,262, // up 5 6
+        261, 262, // up 5 6
     ];
+
+    private IntransponibleTiles = [...MapConfig.walls, ...MapConfig.closedDoor]
 
     constructor() {
         this.inputController = new InputController();
@@ -52,21 +57,29 @@ export class Character implements ICharacter {
         // Define direção, sprite e flip com base na entrada
         if (isUp()) {
             this.dy = -1;
+
             this.direction = Direction.up;
             this.spriteIdx = 6; // Sprite 262
             this.flip = this.frameCounter < this.duration ? 0 : 1; // Alterna flip para animação
+
         } else if (isDown()) {
+
             this.dy = 1;
+
             this.direction = Direction.down;
             this.spriteIdx = 1; // Sprite 257
             this.flip = this.frameCounter < this.duration ? 0 : 1; // Alterna flip para animação
         } else if (isLeft()) {
+
             this.dx = -1;
+
             this.direction = Direction.left;
             this.spriteIdx = this.frameCounter < this.duration ? 3 : 4; // Alterna entre 258 e 259
             this.flip = 1;
         } else if (isRight()) {
+
             this.dx = 1;
+
             this.direction = Direction.right;
             this.spriteIdx = this.frameCounter < this.duration ? 3 : 4; // Alterna entre 258 e 259
             this.flip = 0;
@@ -76,10 +89,21 @@ export class Character implements ICharacter {
             this.frameCounter = 0; // Reseta animação quando parado
         }
 
+
         // Atualiza posição
-        this.x += this.speed * this.dx;
-        this.y += this.speed * this.dy;
+        this.x += this.dx * this.speed;
+        //checa e reverte colisão
+        if (isColidingTile(this.x, this.y, this.w - 2, this.h - 2, this.IntransponibleTiles)) { //-2 facilita passar por portas
+            this.x -= this.dx * this.speed
+        }
+
+        this.y += this.dy * this.speed;
+        //checa e reverte colisão
+        if (isColidingTile(this.x, this.y, this.w - 2, this.h - 2, this.IntransponibleTiles)) { //-2 facilita passar por portas
+            this.y -= this.dy * this.speed
+        }
     }
+
 
     private checkSpriteDirection() {
         // Define sprite inicial para cada direção quando parado
