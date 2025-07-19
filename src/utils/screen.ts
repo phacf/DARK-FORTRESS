@@ -2,10 +2,10 @@
  * 
  * @param px position x
  * @param py position y
- * @param set lib with tile set to identify
+ * @param set lib with tile set to identify number[]
  * @returns 
  */
-export function detectTile(px: number, py: number, set: number[]): boolean {
+export function detectTile(px: number, py: number, set: readonly number[]): boolean {
     let cx = Math.floor(px / 8)
     let cy = Math.floor(py / 8)
     let tile = mget(cx, cy)

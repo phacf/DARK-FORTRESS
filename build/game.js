@@ -6,6 +6,10 @@
 // license: MIT License (change this to your license of choice)
 // version: 0.1
 // script:  js
+const MapConfig = {
+  walls: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+  closedDoor: [32, 33, 34, 35]
+};
 const Direction = {
   up: "up",
   down: "down",
@@ -52,6 +56,18 @@ class InputController {
     return btn(Keypad.y);
   }
 }
+function detectTile(px, py, set) {
+  let cx = Math.floor(px / 8);
+  let cy = Math.floor(py / 8);
+  let tile = mget(cx, cy);
+  return set.includes(tile);
+}
+function isColidingTile(x, y, w, h, set) {
+  return detectTile(x, y, set) || // canto superior esquerdo
+  detectTile(x + w - 1, y, set) || // superior direito
+  detectTile(x, y + h - 1, set) || // inferior esquerdo
+  detectTile(x + w - 1, y + h - 1, set);
+}
 function goToTile(tilex, tiley) {
   return { x: tilex * 8, y: tiley * 8 };
 }
@@ -84,6 +100,7 @@ class Character {
       262
       // up 5 6
     ];
+    this.IntransponibleTiles = [...MapConfig.walls, ...MapConfig.closedDoor];
     this.inputController = new InputController();
     this.gotoStart();
   }
@@ -121,8 +138,14 @@ class Character {
       this.checkSpriteDirection();
       this.frameCounter = 0;
     }
-    this.x += this.speed * this.dx;
-    this.y += this.speed * this.dy;
+    this.x += this.dx * this.speed;
+    if (isColidingTile(this.x, this.y, this.w - 2, this.h - 2, this.IntransponibleTiles)) {
+      this.x -= this.dx * this.speed;
+    }
+    this.y += this.dy * this.speed;
+    if (isColidingTile(this.x, this.y, this.w - 2, this.h - 2, this.IntransponibleTiles)) {
+      this.y -= this.dy * this.speed;
+    }
   }
   checkSpriteDirection() {
     if (this.direction === Direction.up) {
