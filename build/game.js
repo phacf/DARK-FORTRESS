@@ -73,13 +73,16 @@ class Character {
     this.direction = Direction.down;
     this.spriteIdx = 0;
     this.sprites = [
+      256,
       257,
-      // down
+      // down 0 1
       258,
       259,
-      // left/right
+      260,
+      // left/right 2 3 4
+      261,
       262
-      // up
+      // up 5 6
     ];
     this.inputController = new InputController();
     this.gotoStart();
@@ -97,22 +100,22 @@ class Character {
     if (isUp()) {
       this.dy = -1;
       this.direction = Direction.up;
-      this.spriteIdx = 3;
+      this.spriteIdx = 6;
       this.flip = this.frameCounter < this.duration ? 0 : 1;
     } else if (isDown()) {
       this.dy = 1;
       this.direction = Direction.down;
-      this.spriteIdx = 0;
+      this.spriteIdx = 1;
       this.flip = this.frameCounter < this.duration ? 0 : 1;
     } else if (isLeft()) {
       this.dx = -1;
       this.direction = Direction.left;
-      this.spriteIdx = this.frameCounter < this.duration ? 1 : 2;
+      this.spriteIdx = this.frameCounter < this.duration ? 3 : 4;
       this.flip = 1;
     } else if (isRight()) {
       this.dx = 1;
       this.direction = Direction.right;
-      this.spriteIdx = this.frameCounter < this.duration ? 1 : 2;
+      this.spriteIdx = this.frameCounter < this.duration ? 3 : 4;
       this.flip = 0;
     } else {
       this.checkSpriteDirection();
@@ -123,16 +126,16 @@ class Character {
   }
   checkSpriteDirection() {
     if (this.direction === Direction.up) {
-      this.spriteIdx = 3;
+      this.spriteIdx = 5;
       this.flip = 0;
     } else if (this.direction === Direction.down) {
       this.spriteIdx = 0;
       this.flip = 0;
     } else if (this.direction === Direction.left) {
-      this.spriteIdx = 1;
+      this.spriteIdx = 2;
       this.flip = 1;
     } else if (this.direction === Direction.right) {
-      this.spriteIdx = 1;
+      this.spriteIdx = 2;
       this.flip = 0;
     }
   }

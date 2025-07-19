@@ -25,9 +25,9 @@ export class Character implements ICharacter {
     private spriteIdx = 0;
 
     private sprites: number[] = [
-        257, // down
-        258, 259, // left/right
-        262, // up
+        256,257, // down 0 1
+        258, 259, 260, // left/right 2 3 4
+        261,262, // up 5 6
     ];
 
     constructor() {
@@ -53,22 +53,22 @@ export class Character implements ICharacter {
         if (isUp()) {
             this.dy = -1;
             this.direction = Direction.up;
-            this.spriteIdx = 3; // Sprite 262
+            this.spriteIdx = 6; // Sprite 262
             this.flip = this.frameCounter < this.duration ? 0 : 1; // Alterna flip para animação
         } else if (isDown()) {
             this.dy = 1;
             this.direction = Direction.down;
-            this.spriteIdx = 0; // Sprite 257
+            this.spriteIdx = 1; // Sprite 257
             this.flip = this.frameCounter < this.duration ? 0 : 1; // Alterna flip para animação
         } else if (isLeft()) {
             this.dx = -1;
             this.direction = Direction.left;
-            this.spriteIdx = this.frameCounter < this.duration ? 1 : 2; // Alterna entre 258 e 259
+            this.spriteIdx = this.frameCounter < this.duration ? 3 : 4; // Alterna entre 258 e 259
             this.flip = 1;
         } else if (isRight()) {
             this.dx = 1;
             this.direction = Direction.right;
-            this.spriteIdx = this.frameCounter < this.duration ? 1 : 2; // Alterna entre 258 e 259
+            this.spriteIdx = this.frameCounter < this.duration ? 3 : 4; // Alterna entre 258 e 259
             this.flip = 0;
         } else {
             // Personagem parado, seleciona sprite inicial
@@ -84,16 +84,16 @@ export class Character implements ICharacter {
     private checkSpriteDirection() {
         // Define sprite inicial para cada direção quando parado
         if (this.direction === Direction.up) {
-            this.spriteIdx = 3; // Sprite 262
+            this.spriteIdx = 5; // Sprite 262
             this.flip = 0; // Sem flip quando parado
         } else if (this.direction === Direction.down) {
-            this.spriteIdx = 0; // Sprite 257
+            this.spriteIdx = 0; // Sprite 256
             this.flip = 0; // Sem flip quando parado
         } else if (this.direction === Direction.left) {
-            this.spriteIdx = 1; // Sprite 258
+            this.spriteIdx = 2; // Sprite 258
             this.flip = 1;
         } else if (this.direction === Direction.right) {
-            this.spriteIdx = 1; // Sprite 258
+            this.spriteIdx = 2; // Sprite 258
             this.flip = 0;
         }
     }
