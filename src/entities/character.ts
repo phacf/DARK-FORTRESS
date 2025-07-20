@@ -4,6 +4,7 @@ import { InputController } from "controllers/inputController";
 import { ICharacter } from "interfaces/ICharacter";
 import { isColidingTile } from "utils/colision";
 import { goToTile } from "utils/movement";
+import { getTileRight, getTileUP } from "utils/screen";
 
 
 export class Character implements ICharacter {
@@ -65,7 +66,7 @@ export class Character implements ICharacter {
             this.horizontalMove(-1, Direction.left, 1)
 
         } else if (isRight()) {
-            this.horizontalMove(1, Direction.left, 0)
+            this.horizontalMove(1, Direction.right, 0)
 
         } else {
             // Personagem parado, seleciona sprite inicial
@@ -88,9 +89,9 @@ export class Character implements ICharacter {
     }
 
     private makeAction() {
-        const {isA} = this.inputController;
+        const { isA } = this.inputController;
 
-        if(isA()){
+        if (isA()) {
             this.openDoor()
         }
     }
@@ -99,7 +100,7 @@ export class Character implements ICharacter {
         //detectClosedDoor
         if (this.isColidingSolid(MapConfig.closedDoor)) {
             if (this.direction === Direction.up) {
-                print(String(mget(this.x, this.y + this.h)))
+                const tileUP = getTileUP(this.x,this.y,this.w,this.h)
 
                 // mset(this.x/8+1,this.y/8,37)
             }
@@ -148,4 +149,6 @@ export class Character implements ICharacter {
         const sprt = this.sprites[this.spriteIdx];
         spr(sprt, this.x, this.y, 0, 1, this.flip, 0);
     }
+
+
 }

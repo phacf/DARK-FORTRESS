@@ -32,4 +32,75 @@ export function checkLimit(limit: number, size: number, direction: number) {
 
 }
 
+/**
+ * 
+ * @param x 
+ * @param y 
+ * @param w 
+ * @param _h 
+ * @returns tile logo acima um pouco a esquerda do centro
+ */
+export function getTileUP(x: number, y: number, w: number, _h?: number) {
+    return mget(Math.floor((x + w / 4) / 8), Math.floor((y - 1) / 8))
+}
+
+/**
+ * 
+ * @param x 
+ * @param y 
+ * @param w 
+ * @param h 
+ * @returns tile logo abaixo um pouco a esquerda do centro
+ */
+export function getTileDown(x: number, y: number, w: number, h: number) {
+    return mget(Math.floor((x + w / 4) / 8), Math.floor((y + (h + 1)) / 8))
+}
+
+/**
+ * 
+ * @param x 
+ * @param y 
+ * @param _w 
+ * @param _h 
+ * @returns centro do tile logo a esquerda 
+ */
+export function getTileLeft(x: number, y: number, _w: number, h: number) {
+    return mget(Math.floor((x - 1) / 8), Math.floor((y + h / 2) / 8))
+}
+
+/**
+ * 
+ * @param x 
+ * @param y 
+ * @param w 
+ * @param h 
+ * @returns centro do tile logo a direita
+ */
+export function getTileRight(x: number, y: number, w: number, h: number) {
+    return mget(Math.floor((x + (w + 1)) / 8), Math.floor((y + h / 2) / 8))
+}
+
+/**
+ * 
+ * @param x 
+ * @param y 
+ * @param w 
+ * @param h 
+ * @returns centro do tile logo acima
+ */
+export function aimUp(x: number, y: number, w: number, h: number) {
+    return {
+        x:(x + w / 2) / 8,
+        y:(y + h / 2) / 8
+    }
+}
+
+export function aimDown() { }
+
+export function aimLeft() { }
+
+export function aimRight() { }
+
+
+
 
