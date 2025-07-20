@@ -56,54 +56,76 @@ export class Character implements ICharacter {
 
         // Define direção, sprite e flip com base na entrada
         if (isUp()) {
-            this.dy = -1;
-
-            this.direction = Direction.up;
-            this.spriteIdx = 6; // Sprite 262
-            this.flip = this.frameCounter < this.duration ? 0 : 1; // Alterna flip para animação
+            this.verticalMove(-1, Direction.up, 6)
 
         } else if (isDown()) {
+            this.verticalMove(1, Direction.down, 1)
 
-            this.dy = 1;
-
-            this.direction = Direction.down;
-            this.spriteIdx = 1; // Sprite 257
-            this.flip = this.frameCounter < this.duration ? 0 : 1; // Alterna flip para animação
         } else if (isLeft()) {
+            this.horizontalMove(-1, Direction.left, 1)
 
-            this.dx = -1;
-
-            this.direction = Direction.left;
-            this.spriteIdx = this.frameCounter < this.duration ? 3 : 4; // Alterna entre 258 e 259
-            this.flip = 1;
         } else if (isRight()) {
+            this.horizontalMove(1, Direction.left, 0)
 
-            this.dx = 1;
-
-            this.direction = Direction.right;
-            this.spriteIdx = this.frameCounter < this.duration ? 3 : 4; // Alterna entre 258 e 259
-            this.flip = 0;
         } else {
             // Personagem parado, seleciona sprite inicial
             this.checkSpriteDirection();
             this.frameCounter = 0; // Reseta animação quando parado
         }
 
-
         // Atualiza posição
         this.x += this.dx * this.speed;
         //checa e reverte colisão
-        if (isColidingTile(this.x, this.y, this.w - 2, this.h - 2, this.IntransponibleTiles)) { //-2 facilita passar por portas
+        if (this.isColidingSolid(this.IntransponibleTiles)) { //-2 facilita passar por portas
             this.x -= this.dx * this.speed
         }
 
         this.y += this.dy * this.speed;
         //checa e reverte colisão
-        if (isColidingTile(this.x, this.y, this.w - 2, this.h - 2, this.IntransponibleTiles)) { //-2 facilita passar por portas
+        if (this.isColidingSolid(this.IntransponibleTiles)) { //-2 facilita passar por portas
             this.y -= this.dy * this.speed
         }
     }
 
+    private makeAction() {
+        const {isA} = this.inputController;
+
+        if(isA()){
+            this.openDoor()
+        }
+    }
+
+    private openDoor() {
+        //detectClosedDoor
+        if (this.isColidingSolid(MapConfig.closedDoor)) {
+            if (this.direction === Direction.up) {
+                print(String(mget(this.x, this.y + this.h)))
+
+                // mset(this.x/8+1,this.y/8,37)
+            }
+            if (this.direction === Direction.up) { }
+            if (this.direction === Direction.up) { }
+            if (this.direction === Direction.up) { }
+        }
+    }
+
+    private isColidingSolid(set: readonly number[]): boolean {
+        return isColidingTile(this.x, this.y, this.w - 2, this.h - 2, set)
+    }
+
+    private verticalMove(dy: number, direction: DirectionType, sprIndex: number) {
+        this.dy = dy
+        this.direction = direction;
+        this.spriteIdx = sprIndex; // Sprite 262
+        this.flip = this.frameCounter < this.duration ? 0 : 1; // Alterna flip para animação
+    }
+
+    private horizontalMove(dx: number, direction: DirectionType, flip: number) {
+        this.dx = dx;
+        this.direction = direction;
+        this.spriteIdx = this.frameCounter < this.duration ? 3 : 4; // Alterna entre 258 e 259
+        this.flip = flip;
+    }
 
     private checkSpriteDirection() {
         // Define sprite inicial para cada direção quando parado

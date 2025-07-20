@@ -12,6 +12,7 @@ export function detectTile(px: number, py: number, set: readonly number[]): bool
     return set.includes(tile)
 }
 
+
 /**
  * limitar limite da tela
  */
