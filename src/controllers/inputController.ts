@@ -22,7 +22,7 @@ export class InputController implements IInputController {
     }
 
     isA(): boolean {
-        return btnp(Keypad.a);
+        return btn(Keypad.a);
 
     }
 

@@ -4,7 +4,7 @@ import { InputController } from "controllers/inputController";
 import { ICharacter } from "interfaces/ICharacter";
 import { isColidingTile } from "utils/colision";
 import { goToTile } from "utils/movement";
-import { getTileRight, getTileUP } from "utils/screen";
+import { aimDown, aimUp, getTileDown, getTileRight, getTileUP, onTile } from "utils/screen";
 
 
 export class Character implements ICharacter {
@@ -42,7 +42,7 @@ export class Character implements ICharacter {
     }
 
     private gotoStart() {
-        const pos = goToTile(2, 14);
+        const pos = goToTile(6, 13);
         this.x = pos.x;
         this.y = pos.y;
     }
@@ -86,6 +86,9 @@ export class Character implements ICharacter {
         if (this.isColidingSolid(this.IntransponibleTiles)) { //-2 facilita passar por portas
             this.y -= this.dy * this.speed
         }
+
+        this.makeAction()
+        this.passiveActions()
     }
 
     private makeAction() {
@@ -96,18 +99,65 @@ export class Character implements ICharacter {
         }
     }
 
+    private passiveActions() {
+        this.crossDoor()
+    }
+
+    private crossDoor() {
+        if (this.direction === Direction.up) {
+            const tile = onTile(this.x, this.y)
+            const tileCross = onTile(this.x, this.y - 16)
+            const { x, y } = aimUp(this.x, this.y, this.w, this.h)
+            const next = goToTile(x, y - 1.6)
+
+            if (tile === MapConfig.OPEN_DOOR_TOP && tileCross === MapConfig.OPEN_DOOR_BOTTOM) {
+                this.x = next.x
+                this.y = next.y
+            }
+        }
+
+        if (this.direction === Direction.down) {
+            const tile = onTile(this.x, this.y)
+            const tileCross = onTile(this.x, this.y + 16)
+            const { x, y } = aimUp(this.x, this.y, this.w, this.h)
+            const next = goToTile(x, y + 3)
+
+            if (tile === MapConfig.OPEN_DOOR_BOTTOM && tileCross === MapConfig.OPEN_DOOR_TOP) {
+                this.x = next.x
+                this.y = next.y
+            }
+        }
+    }
+
     private openDoor() {
         //detectClosedDoor
-        if (this.isColidingSolid(MapConfig.closedDoor)) {
-            if (this.direction === Direction.up) {
-                const tileUP = getTileUP(this.x,this.y,this.w,this.h)
+        if (this.direction === Direction.up) {
+            const tileUP = getTileUP(this.x, this.y, this.w, this.h)
+            const tileCross = getTileUP(this.x, this.y - 16, this.w, this.h)
+            const { x, y } = aimUp(this.x, this.y, this.w, this.h)
 
-                // mset(this.x/8+1,this.y/8,37)
+            if (MapConfig.closedDoor.includes(tileUP) && MapConfig.closedDoor.includes(tileCross)) {
+                mset(x, y, MapConfig.OPEN_DOOR_TOP)
+                mset(x, y - 2, MapConfig.OPEN_DOOR_BOTTOM)
+            } else if (MapConfig.closedDoor.includes(tileUP)) {
+                mset(x, y, MapConfig.OPEN_DOOR_TOP)
             }
-            if (this.direction === Direction.up) { }
-            if (this.direction === Direction.up) { }
-            if (this.direction === Direction.up) { }
+
         }
+        if (this.direction === Direction.down) {
+            const tileDown = getTileDown(this.x, this.y, this.w, this.h)
+            const tileCross = getTileDown(this.x, this.y + 16, this.w, this.h)
+            const { x, y } = aimDown(this.x, this.y, this.w, this.h)
+
+            if (MapConfig.closedDoor.includes(tileDown) && MapConfig.closedDoor.includes(tileCross)) {
+                mset(x, y, MapConfig.OPEN_DOOR_BOTTOM)
+                mset(x, y + 2, MapConfig.OPEN_DOOR_TOP)
+            } else if (MapConfig.closedDoor.includes(tileDown)) {
+                mset(x, y, MapConfig.OPEN_DOOR_BOTTOM)
+            }
+        }
+        // if (this.direction === Direction.up) { }
+        // if (this.direction === Direction.up) { }
     }
 
     private isColidingSolid(set: readonly number[]): boolean {

@@ -12,6 +12,19 @@ export function detectTile(px: number, py: number, set: readonly number[]): bool
     return set.includes(tile)
 }
 
+/**
+ * 
+ * @param px position x
+ * @param py position y
+ * @returns 
+ */
+export function onTile(px: number, py: number): number {
+    let cx = Math.floor(px / 8)
+    let cy = Math.floor(py / 8)
+    return mget(cx, cy)
+    
+}
+
 
 /**
  * limitar limite da tela
@@ -81,7 +94,8 @@ export function getTileRight(x: number, y: number, w: number, h: number) {
 }
 
 /**
- * 
+ * 216 112
+ * 27 21 w7 h8
  * @param x 
  * @param y 
  * @param w 
@@ -90,16 +104,31 @@ export function getTileRight(x: number, y: number, w: number, h: number) {
  */
 export function aimUp(x: number, y: number, w: number, h: number) {
     return {
-        x:(x + w / 2) / 8,
-        y:(y + h / 2) / 8
+        x: Math.floor((x + w / 2) / 8),
+        y: Math.floor((y - h / 2) / 8)
     }
 }
 
-export function aimDown() { }
+export function aimDown(x: number, y: number, w: number, h: number) {
+    return {
+        x: (x + w / 2) / 8,
+        y: (y + h * 1.5) / 8
+    }
+}
 
-export function aimLeft() { }
+export function aimRight(x: number, y: number, w: number, h: number) {
+    return {
+        x: (x + w * 1.5) / 8,
+        y: (y + h / 2) / 8
+    }
+}
 
-export function aimRight() { }
+export function aimleft(x: number, y: number, w: number, h: number) { 
+    return {
+        x: (x - w / 2) / 8,
+        y: (y + h / 2) / 8
+    }
+}
 
 
 
