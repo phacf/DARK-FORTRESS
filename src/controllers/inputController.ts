@@ -27,17 +27,17 @@ export class InputController implements IInputController {
     }
 
     isB(): boolean {
-        return btn(Keypad.b);
+        return btnp(Keypad.b);
 
     }
 
     isX(): boolean {
-        return btn(Keypad.x);
+        return btnp(Keypad.x);
 
     }
 
     isY(): boolean {
-        return btn(Keypad.y);
+        return btnp(Keypad.y);
 
     }
 }

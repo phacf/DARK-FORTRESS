@@ -4,5 +4,9 @@ export const MapConfig = {
     stairs: [20,21,22,23],
     closedDoor: [32,33,34,35],
     openDoor: [36,37,38,39],
-    itens: [48,49,50,51,52,53,54,55,56,57,58,59,60,61,62]
-} as const;
+    itens: [48,49,50,51,52,53,54,55,56,57,58,59,60,61,62],
+    OPEN_DOOR_BOTTOM: 36,
+    OPEN_DOOR_TOP: 37, 
+    OPEN_DOOR_RIGHT: 38,
+    OPEN_DOOR_LEFT: 39
+};
