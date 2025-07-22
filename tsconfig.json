@@ -13,7 +13,9 @@
       "@core/*": ["core/*"],
       "@constants/*": ["constants/*"],
       "@tic/*": ["../tic/*"],
-      "@entities/*": ["entities/*"]
+      "@ecs/*": ["ecs/*"],
+      "@interfaces/*": ["interfaces/*"]
+
 
 
     }
