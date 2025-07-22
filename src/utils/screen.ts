@@ -111,22 +111,22 @@ export function aimUp(x: number, y: number, w: number, h: number) {
 
 export function aimDown(x: number, y: number, w: number, h: number) {
     return {
-        x: (x + w / 2) / 8,
-        y: (y + h * 1.5) / 8
+        x: Math.floor((x + w / 2) / 8),
+        y: Math.floor((y + h * 1.5) / 8)
     }
 }
 
 export function aimRight(x: number, y: number, w: number, h: number) {
     return {
-        x: (x + w * 1.5) / 8,
-        y: (y + h / 2) / 8
+        x: Math.floor((x + w * 1.5) / 8),
+        y: Math.floor((y + h / 2) / 8)
     }
 }
 
 export function aimleft(x: number, y: number, w: number, h: number) { 
     return {
-        x: (x - w / 2) / 8,
-        y: (y + h / 2) / 8
+        x: Math.floor((x - w / 2) / 8),
+        y: Math.floor((y + h / 2) / 8)
     }
 }
 
