@@ -93,7 +93,7 @@ export function DoorSystem(entity: Entity, input: InputController) {
 
         if (dir?.direction === Direction.left) {
             const tile = getTileLeft(pos!.x, pos!.y, size!.width, size!.height)
-            const tileCross = getTileLeft(pos!.x - offset / 2, pos!.y + offset, size!.width, size!.height)
+            const tileCross = getTileLeft(pos!.x - offset / 2, pos!.y, size!.width, size!.height)
             const { x, y } = aimleft(pos!.x, pos!.y, size!.width, size!.height)
             if (
                 MapConfig.closedDoor.includes(tile) &&
