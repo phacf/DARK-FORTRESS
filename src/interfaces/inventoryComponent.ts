@@ -1,5 +1,8 @@
 import { IItemComponent } from "./itemComponent";
 
 export interface IInventoryComponent {
-    items: IItemComponent[]   
+    items: IItemComponent[]  
+    limit: number; 
+    selectX: number;
+    selectY: number;
 }

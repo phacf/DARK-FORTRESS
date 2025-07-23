@@ -57,8 +57,10 @@ export function DoorSystem(entity: Entity, input: InputController) {
             ) {
                 mset(x, y, MapConfig.OPEN_DOOR_TOP);
                 mset(x, y - 2, MapConfig.OPEN_DOOR_BOTTOM);
+                playSfx()
             } else if (MapConfig.closedDoor.includes(tile)) {
                 mset(x, y, MapConfig.OPEN_DOOR_TOP);
+                playSfx()
             }
         }
 
@@ -72,8 +74,10 @@ export function DoorSystem(entity: Entity, input: InputController) {
             ) {
                 mset(x, y, MapConfig.OPEN_DOOR_BOTTOM);
                 mset(x, y + 2, MapConfig.OPEN_DOOR_TOP);
+                playSfx()
             } else if (MapConfig.closedDoor.includes(tile)) {
                 mset(x, y, MapConfig.OPEN_DOOR_BOTTOM);
+                playSfx()
             }
         }
 
@@ -87,8 +91,10 @@ export function DoorSystem(entity: Entity, input: InputController) {
             ) {
                 mset(x, y, MapConfig.OPEN_DOOR_RIGHT);
                 mset(x + 1, y, MapConfig.OPEN_DOOR_LEFT);
+                playSfx()
             } else if (MapConfig.closedDoor.includes(tile)) {
                 mset(x, y, MapConfig.OPEN_DOOR_RIGHT);
+                playSfx()
             }
         }
 
@@ -102,12 +108,17 @@ export function DoorSystem(entity: Entity, input: InputController) {
             ) {
                 mset(x, y, MapConfig.OPEN_DOOR_LEFT);
                 mset(x - 1, y, MapConfig.OPEN_DOOR_RIGHT);
+                playSfx()
             } else if (MapConfig.closedDoor.includes(tile)) {
                 mset(x, y, MapConfig.OPEN_DOOR_LEFT);
+                playSfx()
             }
         }
-        sfx(1, 'B-3', 6, 0);
 
     }
 
+}
+
+function playSfx() {
+    sfx(1, 'B-3', 6, 0);
 }

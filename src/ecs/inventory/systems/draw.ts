@@ -32,6 +32,8 @@ export function InventoryDrawSystem(entity: Entity) {
             }
 
             spr(item, itemX*8, itemY*8, 0, 1, 0, 0)
+            //selection
+            spr(269, 8, 8, 0, 1, 0, 0)
             itemX++ 
 
         }
