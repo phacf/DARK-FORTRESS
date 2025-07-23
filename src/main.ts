@@ -1,11 +1,8 @@
-import { Game } from "@core/game";
-
-const game = new Game();
+import { GameSystem } from "@ecs/game/systems/game";
 
 function TIC() {
     cls()
-    game.update();
-    game.draw();
+    GameSystem()
 }
 
 (globalThis as any).TIC = TIC;

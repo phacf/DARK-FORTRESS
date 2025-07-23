@@ -17,6 +17,7 @@ export function DoorSystem(entity: Entity, input: InputController) {
     const tile = onTile(pos!.x, pos!.y)
     const offset = 16
 
+
     if (dir?.direction === Direction.up) {
         const tileCross = onTile(pos!.x, pos!.y - offset)
         if (
