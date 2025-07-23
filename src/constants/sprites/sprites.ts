@@ -10,6 +10,8 @@ export const CharacterSprites: number[] = [
     261, 262, // up
 ];
 
+export const ItemSprites = [48,49,50,51,52,53,54,55,56,57,58,59,60,61,62]
+
 export const Direction = {
     up: 'up',
     down: 'down',

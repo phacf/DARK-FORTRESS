@@ -13,7 +13,6 @@ export function InventorySystem(entity: Entity) {
 
     if (MapConfig.itens.includes(currentTile)) {
         mset(tileX, tileY, MapConfig.path[0]);
-
         sfx(0, 'E-4', 20, 0);
     }
 }

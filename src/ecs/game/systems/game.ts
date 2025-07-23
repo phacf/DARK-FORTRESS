@@ -4,8 +4,10 @@ import { MovementSystem } from "../../character/systems/movement";
 import { createPlayerEntity } from "@ecs/character/index";
 import { InputController } from "controllers/inputController";
 import { GameStateComponent } from "@ecs/character/components/gameState";
-import { DrawSystem } from "@ecs/character/systems/draw";
+import { PlayerDrawSystem } from "@ecs/character/systems/draw";
 import { InventorySystem } from "@ecs/inventory/systems/inventory";
+import { InventoryDrawSystem } from "@ecs/inventory/systems/draw";
+import { InventoryInputSystem } from "@ecs/inventory/systems/input";
 
 const player = createPlayerEntity()
 const input = new InputController()
@@ -18,10 +20,11 @@ export function GameSystem() {
         DoorSystem(player, input)
         MovementSystem(player)
         InventorySystem(player)
-
     }
+    InventoryInputSystem(player, input)
 
     map()
-    DrawSystem(player)
+    PlayerDrawSystem(player)
+    InventoryDrawSystem(player)
 
 }
