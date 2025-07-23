@@ -38,7 +38,7 @@ export function DoorSystem(entity: Entity, input: InputController) {
             tileCross === MapConfig.OPEN_DOOR_TOP
         ) {
             const { x, y } = aimDown(pos!.x, pos!.y, size!.width, size!.height)
-            const next = goToTile(x, y+1);
+            const next = goToTile(x, y + 1);
             pos!.x = next.x
             pos!.y = next.y
         }
@@ -79,7 +79,7 @@ export function DoorSystem(entity: Entity, input: InputController) {
 
         if (dir?.direction === Direction.right) {
             const tile = getTileRight(pos!.x, pos!.y, size!.width, size!.height)
-            const tileCross = getTileRight(pos!.x + (offset/2), pos!.y, size!.width, size!.height)
+            const tileCross = getTileRight(pos!.x + (offset / 2), pos!.y, size!.width, size!.height)
             const { x, y } = aimRight(pos!.x, pos!.y, size!.width, size!.height)
             if (
                 MapConfig.closedDoor.includes(tile) &&
@@ -106,6 +106,7 @@ export function DoorSystem(entity: Entity, input: InputController) {
                 mset(x, y, MapConfig.OPEN_DOOR_LEFT);
             }
         }
+        sfx(1, 'B-3', 6, 0);
 
     }
 
