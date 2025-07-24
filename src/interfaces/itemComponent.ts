@@ -1,6 +1,7 @@
 export interface IItemComponent {
-    label: string;
-    amount: number;
-    isConsumable?: boolean;
-    type: string;
+    tile: number
+    sprite: number
+    label: string
+    type: string
+    isConsumable?: boolean
 }

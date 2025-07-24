@@ -10,3 +10,4 @@ export const MapConfig = {
     OPEN_DOOR_RIGHT: 38,
     OPEN_DOOR_LEFT: 39
 };
+

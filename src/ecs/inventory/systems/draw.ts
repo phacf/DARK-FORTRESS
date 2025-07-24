@@ -1,10 +1,13 @@
-import { ItemSprites } from "@constants/sprites/sprites";
-import { GameStateComponent } from "@ecs/character/components/gameState";
-import { Entity } from "@ecs/models/entity";
+import { GameStateComponent } from "@ecs/character/components/gameState"
+import { Entity } from "@ecs/models/entity"
+import { InventoryComponent } from "../components/inventoryComponent"
 
 export function InventoryDrawSystem(entity: Entity) {
-    const game = entity.get(GameStateComponent)
-    if (game?.state === "openInventory") {
+    const game = entity.get(GameStateComponent) 
+    const inventory = entity.get(InventoryComponent)
+    if(!game && !inventory) return 
+
+    if (game.state === "openInventory") {
         const margin = 2
         const distance = Math.floor(margin / 2)
         const width = 10
@@ -19,25 +22,24 @@ export function InventoryDrawSystem(entity: Entity) {
         //inside    
         rect(x * 8, y * 8, width * 8, height * 8, 0)
 
-        for (let i = 0; i < ItemSprites.length; i++) {
-            const item = ItemSprites[i]
+
+        for (let i = 0; i < inventory.items.length; i++) {
+            const item = inventory.items[i].sprite;
 
             if (itemX > width) {
-                itemX = x
-                itemY ++
-            } 
-
-            if (itemY > height) {
-                continue
+                itemX = x;
+                itemY++;
             }
 
-            spr(item, itemX*8, itemY*8, 0, 1, 0, 0)
-            //selection
-            spr(269, 8, 8, 0, 1, 0, 0)
-            itemX++ 
+            if (itemY > height) {
+                continue;
+            }
 
+            spr(item, itemX * 8, itemY * 8, 0, 1, 0, 0);
+            itemX++;
         }
 
-
+        // draw selection cursor AFTER items
+        spr(269, inventory.sx * 8, inventory.sy * 8, 0, 1, 0, 0);
     }
 }

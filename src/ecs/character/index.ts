@@ -13,6 +13,7 @@ import { DoorInteractorComponent } from "./components/door";
 import { PlayerControlledComponent } from "./components/player";
 import { GameStateComponent } from "./components/gameState";
 import { GameState } from "@constants/state/state";
+import { InventoryComponent } from "@ecs/inventory/components/inventoryComponent";
 
 export function createPlayerEntity(): Entity {
     const entity = new Entity();
@@ -34,6 +35,12 @@ export function createPlayerEntity(): Entity {
         })
         .add(PlayerControlledComponent, {})
         .add(DoorInteractorComponent, {})
-        .add(GameStateComponent, {state: GameState.IN_GAME});
+        .add(GameStateComponent, {state: GameState.IN_GAME})
+        .add(InventoryComponent,{
+            items: [],
+            limit: 30,
+            sx: 1,
+            sy: 1
+        });
     return entity;
 }
