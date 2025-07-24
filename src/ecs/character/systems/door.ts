@@ -7,11 +7,13 @@ import { aimDown, aimleft, aimRight, aimUp, getTileDown, getTileLeft, getTileRig
 import { Direction } from "@constants/sprites/sprites";
 import { MapConfig } from "@constants/map/map";
 import { goToTile } from "utils/movement";
+import { InventoryComponent } from "@ecs/inventory/components/inventoryComponent";
 
 export function DoorSystem(entity: Entity, input: InputController) {
     const pos = entity.get(PositionComponent);
     const size = entity.get(SizeComponent);
     const dir = entity.get(DirectionComponent);
+    const inv = entity.get(InventoryComponent)
 
     //CROSS DOOR
     const tile = onTile(pos!.x, pos!.y)
@@ -45,7 +47,8 @@ export function DoorSystem(entity: Entity, input: InputController) {
 
     }
 
-    if (input.isA()) {
+    if (input.isA() && inv?.items.some(item => item.type === 'key')) {
+
         const offset = 16
         if (dir?.direction === Direction.up) {
             const tile = getTileUP(pos!.x, pos!.y, size!.width, size!.height)
@@ -57,10 +60,10 @@ export function DoorSystem(entity: Entity, input: InputController) {
             ) {
                 mset(x, y, MapConfig.OPEN_DOOR_TOP);
                 mset(x, y - 2, MapConfig.OPEN_DOOR_BOTTOM);
-                playSfx()
+                removeKeyFromInventory(inv)
             } else if (MapConfig.closedDoor.includes(tile)) {
                 mset(x, y, MapConfig.OPEN_DOOR_TOP);
-                playSfx()
+                removeKeyFromInventory(inv)
             }
         }
 
@@ -74,10 +77,12 @@ export function DoorSystem(entity: Entity, input: InputController) {
             ) {
                 mset(x, y, MapConfig.OPEN_DOOR_BOTTOM);
                 mset(x, y + 2, MapConfig.OPEN_DOOR_TOP);
-                playSfx()
+                removeKeyFromInventory(inv)
+
             } else if (MapConfig.closedDoor.includes(tile)) {
                 mset(x, y, MapConfig.OPEN_DOOR_BOTTOM);
-                playSfx()
+                removeKeyFromInventory(inv)
+
             }
         }
 
@@ -91,10 +96,12 @@ export function DoorSystem(entity: Entity, input: InputController) {
             ) {
                 mset(x, y, MapConfig.OPEN_DOOR_RIGHT);
                 mset(x + 1, y, MapConfig.OPEN_DOOR_LEFT);
-                playSfx()
+                removeKeyFromInventory(inv)
+
             } else if (MapConfig.closedDoor.includes(tile)) {
                 mset(x, y, MapConfig.OPEN_DOOR_RIGHT);
-                playSfx()
+                removeKeyFromInventory(inv)
+
             }
         }
 
@@ -108,10 +115,12 @@ export function DoorSystem(entity: Entity, input: InputController) {
             ) {
                 mset(x, y, MapConfig.OPEN_DOOR_LEFT);
                 mset(x - 1, y, MapConfig.OPEN_DOOR_RIGHT);
-                playSfx()
+                removeKeyFromInventory(inv)
+
             } else if (MapConfig.closedDoor.includes(tile)) {
                 mset(x, y, MapConfig.OPEN_DOOR_LEFT);
-                playSfx()
+                removeKeyFromInventory(inv)
+
             }
         }
 
@@ -119,6 +128,11 @@ export function DoorSystem(entity: Entity, input: InputController) {
 
 }
 
-function playSfx() {
+
+function removeKeyFromInventory(inv: InventoryComponent) {
+    const index = inv.items.findIndex(item => item.type === 'key');
+    if (index !== -1) {
+        inv.items.splice(index, 1);
+    }
     sfx(1, 'B-3', 6, 0);
 }

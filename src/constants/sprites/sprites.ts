@@ -17,7 +17,15 @@ export const CharacterSprites: number[] = [
 
 export const ItemSprites = [320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331]
 
-export const ItemDefinitions = [
+export type ItemType = 'key'| 'gold' | 'weapon' | 'health' | 'armor'
+export type ItemDefinitionType = {
+    tile: number;
+    sprite: number;
+    label: string;
+    type: ItemType;
+}[]
+
+export const ItemDefinitions: ItemDefinitionType = [
     {
         tile: 48,
         sprite: 320,
