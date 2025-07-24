@@ -8,7 +8,7 @@ import { SpriteComponent } from "./components/sprite";
 import { DirectionComponent } from "./components/direction";
 import { CombatComponent } from "./components/combat";
 import { SolidCollisionComponent } from "./components/solids";
-import { MapConfig } from "@constants/map/map";
+import { solidTiles } from "@constants/map/map";
 import { DoorInteractorComponent } from "./components/door";
 import { PlayerControlledComponent } from "./components/player";
 import { GameStateComponent } from "./components/gameState";
@@ -31,12 +31,12 @@ export function createPlayerEntity(): Entity {
         .add(DirectionComponent, { direction: Direction.down })
         .add(CombatComponent, { life: 1, receivedHits: 0, isAttacking: false })
         .add(SolidCollisionComponent, {
-            solidTiles: [...MapConfig.walls, ...MapConfig.closedDoor],
+            solidTiles: solidTiles,
         })
         .add(PlayerControlledComponent, {})
         .add(DoorInteractorComponent, {})
-        .add(GameStateComponent, {state: GameState.IN_GAME})
-        .add(InventoryComponent,{
+        .add(GameStateComponent, { state: GameState.IN_GAME })
+        .add(InventoryComponent, {
             items: [],
             limit: 30,
             sx: 1,

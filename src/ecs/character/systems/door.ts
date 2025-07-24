@@ -13,7 +13,7 @@ export function DoorSystem(entity: Entity, input: InputController) {
     const pos = entity.get(PositionComponent);
     const size = entity.get(SizeComponent);
     const dir = entity.get(DirectionComponent);
-    const inv = entity.get(InventoryComponent)
+    const inv = entity.get(InventoryComponent);
 
     //CROSS DOOR
     const tile = onTile(pos!.x, pos!.y)
