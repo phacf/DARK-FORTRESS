@@ -21,8 +21,27 @@ export class InputController implements IInputController {
 
     }
 
+    pressUp(): boolean {
+        return btnp(Keypad.up);
+    }
+
+    pressDown(): boolean {
+        return btnp(Keypad.down);
+
+    }
+
+    pressLeft(): boolean {
+        return btnp(Keypad.left);
+
+    }
+
+    pressRight(): boolean {
+        return btnp(Keypad.right);
+
+    }
+
     isA(): boolean {
-        return btn(Keypad.a);
+        return btnp(Keypad.a);
 
     }
 

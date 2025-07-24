@@ -22,7 +22,7 @@ export function onTile(px: number, py: number): number {
     let cx = Math.floor(px / 8)
     let cy = Math.floor(py / 8)
     return mget(cx, cy)
-    
+
 }
 
 
@@ -123,7 +123,7 @@ export function aimRight(x: number, y: number, w: number, h: number) {
     }
 }
 
-export function aimleft(x: number, y: number, w: number, h: number) { 
+export function aimleft(x: number, y: number, w: number, h: number) {
     return {
         x: Math.floor((x - w / 2) / 8),
         y: Math.floor((y + h / 2) / 8)
@@ -131,5 +131,13 @@ export function aimleft(x: number, y: number, w: number, h: number) {
 }
 
 
+export function printTooltip(text: string, x: number = 0, y: number = 0, scale: number = 1, smallFont: boolean = false) {
+    const width = print(text, 1000, -1000, 1, false, scale, smallFont)
+    const height = 6
+    //margin
+    rect(x, y+2, width + 3, height + 3, 4)
+    //black box
+    rect(x + 1, y + 3, width + 1, height + 1, 0)
+    print(text,x+2,y+4,4,false,scale,smallFont)
 
-
+}

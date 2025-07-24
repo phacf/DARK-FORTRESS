@@ -1,11 +1,10 @@
-import { Game } from "@core/game";
-
-const game = new Game();
+import { createPlayerEntity } from "@ecs/character/index";
+import { GameSystem } from "@ecs/game/systems/game";
+const player = createPlayerEntity()
 
 function TIC() {
     cls()
-    game.update();
-    game.draw();
+    GameSystem(player)
 }
 
 (globalThis as any).TIC = TIC;

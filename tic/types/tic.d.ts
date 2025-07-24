@@ -71,7 +71,7 @@ declare function mset(x: number, y: number, value: number): void;
 // ░░ Som ░░
 declare function sfx(
   id: number,
-  note?: number,
+  note?: number | string,
   duration?: number,
   channel?: number,
   volume?: number,
