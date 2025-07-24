@@ -1,11 +1,12 @@
 import { GameStateComponent } from "@ecs/character/components/gameState"
 import { Entity } from "@ecs/models/entity"
 import { InventoryComponent } from "../components/inventoryComponent"
+import { printTooltip } from "utils/screen"
 
 export function InventoryDrawSystem(entity: Entity) {
-    const game = entity.get(GameStateComponent) 
+    const game = entity.get(GameStateComponent)
     const inventory = entity.get(InventoryComponent)
-    if(!game && !inventory) return 
+    if (!game && !inventory) return
 
     if (game.state === "openInventory") {
         const margin = 2
@@ -22,9 +23,8 @@ export function InventoryDrawSystem(entity: Entity) {
         //inside    
         rect(x * 8, y * 8, width * 8, height * 8, 0)
 
-
         for (let i = 0; i < inventory.items.length; i++) {
-            const item = inventory.items[i].sprite;
+            const item = inventory.items[i];
 
             if (itemX > width) {
                 itemX = x;
@@ -35,7 +35,10 @@ export function InventoryDrawSystem(entity: Entity) {
                 continue;
             }
 
-            spr(item, itemX * 8, itemY * 8, 0, 1, 0, 0);
+            spr(item.sprite, itemX * 8, itemY * 8, 0, 1, 0, 0);
+            if (item && inventory?.sx * 8 === itemX * 8 && inventory?.sy * 8 === itemY * 8) {
+                printTooltip(item.label, 1 * 8, 4 * 8, 1, true)
+            }
             itemX++;
         }
 

@@ -11,15 +11,21 @@ export function InventoryInputSystem(entity: Entity, input: InputController) {
 
     if (input.isB()) {
         if (!inventoryToggleLock) {
-            game!.state = (game!.state === "inGame") ? "openInventory" : "inGame"
+            game!.state = (game!.state === "inGame") ? openInventory() : "inGame"
             inventoryToggleLock = true
+
         }
     } else {
         inventoryToggleLock = false
     }
+    if (game.state === 'inGame') {
+        inventory.sx = 1
+        inventory.sy = 1
+    }
 
     // Apenas processa navegação se o inventário estiver aberto
     if (game.state === "openInventory") {
+
         if (input.pressUp()) {
             inventory.sy--
             if (inventory.sy < 1) inventory.sy = 3
@@ -37,4 +43,9 @@ export function InventoryInputSystem(entity: Entity, input: InputController) {
             if (inventory.sx > 10) inventory.sx = 1
         }
     }
+}
+
+function openInventory() {
+    sfx(2, 'D1', 8, 0);
+    return "openInventory"
 }
